@@ -26,7 +26,8 @@ if not cap.isOpened():
     print("Cannot open camera")
     sys.exit()
 
-alpha = 0.2
+suavizacao = 0.75  # Max 0.9, se 1.0, vai colidir
+alpha = 1 - suavizacao
 suave = {"esq": None, "dir": None}
 
 
@@ -100,8 +101,9 @@ while True:
                         2,
                     )
 
-                # Exibe no terminal para debug
-                # print(f"Esq(X:{pulso_e_x}, Y:{pulso_e_y}) | Dir(X:{pulso_d_x}, Y:{pulso_d_y})")
+                print(
+                    f"Esq(X:{pulso_e_x}, Y:{pulso_e_y}) | Dir(X:{pulso_d_x}, Y:{pulso_d_y})"
+                )
 
     cv.imshow("Bateria Virtual - Dois Punhos", frame)
 
