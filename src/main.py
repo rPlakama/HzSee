@@ -1,7 +1,8 @@
+import platform
 import sys
+
 import cv2 as cv
 from ultralytics import YOLO
-import platform
 
 cur_os = platform.system()
 
@@ -88,4 +89,3 @@ while True:
 
 cap.release()
 cv.destroyAllWindows()
-
