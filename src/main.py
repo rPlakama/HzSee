@@ -24,6 +24,19 @@ if not cap.isOpened():
     print("Cannot open camera")
     sys.exit()
 
+alpha = 0.2
+suave = {"esq": None, "dir": None}
+
+
+def suavizar(anterior, atual):
+    if anterior is None:
+        return atual
+    return (
+        anterior[0] + alpha * (atual[0] - anterior[0]),
+        anterior[1] + alpha * (atual[1] - anterior[1]),
+    )
+
+
 while True:
     ret, frame = cap.read()
     if not ret:
@@ -51,6 +64,9 @@ while True:
 
                 # Desenha o Pulso Esquerdo em Azul se estiver visível
                 if pulso_e_x != 0 and pulso_e_y != 0:
+                    suave["esq"] = suavizar(suave["esq"], (pulso_e_x, pulso_e_y))
+                    pulso_e_x = int(suave["esq"][0])
+                    pulso_e_y = int(suave["esq"][1])
                     cv.circle(
                         frame, (pulso_e_x, pulso_e_y), 15, (255, 0, 0), -1
                     )  # Círculo Azul
@@ -66,6 +82,9 @@ while True:
 
                 # Desenha o Pulso Direito em Verde se estiver visível
                 if pulso_d_x != 0 and pulso_d_y != 0:
+                    suave["dir"] = suavizar(suave["dir"], (pulso_d_x, pulso_d_y))
+                    pulso_d_x = int(suave["dir"][0])
+                    pulso_d_y = int(suave["dir"][1])
                     cv.circle(
                         frame, (pulso_d_x, pulso_d_y), 15, (0, 255, 0), -1
                     )  # Círculo Verde
