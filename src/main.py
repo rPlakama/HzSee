@@ -11,6 +11,8 @@ cur_os = platform.system()
 # 1. Carrega o modelo focado em Pose (Esqueleto)
 model = YOLO("yolov8n-pose.pt")
 
+indicadorSize = 10
+
 if cur_os == "Windows":
     cap = cv.VideoCapture(0, cv.CAP_DSHOW)
 elif cur_os == "Linux":
@@ -68,7 +70,7 @@ while True:
                     pulso_e_x = int(suave["esq"][0])
                     pulso_e_y = int(suave["esq"][1])
                     cv.circle(
-                        frame, (pulso_e_x, pulso_e_y), 15, (255, 0, 0), -1
+                        frame, (pulso_e_x, pulso_e_y), indicadorSize, (255, 0, 0), -1
                     )  # Círculo Azul
                     cv.putText(
                         frame,
@@ -86,7 +88,7 @@ while True:
                     pulso_d_x = int(suave["dir"][0])
                     pulso_d_y = int(suave["dir"][1])
                     cv.circle(
-                        frame, (pulso_d_x, pulso_d_y), 15, (0, 255, 0), -1
+                        frame, (pulso_d_x, pulso_d_y), indicadorSize, (0, 255, 0), -1
                     )  # Círculo Verde
                     cv.putText(
                         frame,
