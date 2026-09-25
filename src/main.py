@@ -11,7 +11,7 @@ cur_os = platform.system()
 # 1. Carrega o modelo focado em Pose (Esqueleto)
 model = YOLO("yolov8n-pose.pt")
 
-indicadorSize = 10
+indicadorSize = 5
 
 if cur_os == "Windows":
     cap = cv.VideoCapture(0, cv.CAP_DSHOW)
@@ -26,7 +26,7 @@ if not cap.isOpened():
     print("Cannot open camera")
     sys.exit()
 
-suavizacao = 0.75  # Max 0.9, se 1.0, vai colidir
+suavizacao = 0.65  # Max 0.9, se 1.0, vai colidir
 alpha = 1 - suavizacao
 suave = {"esq": None, "dir": None}
 
@@ -102,7 +102,9 @@ while True:
                     )
 
                 print(
-                    f"Esq(X:{pulso_e_x}, Y:{pulso_e_y}) | Dir(X:{pulso_d_x}, Y:{pulso_d_y})"
+                    # f"Esq(X:{pulso_e_x}, Y:{pulso_e_y}) | Dir(X:{pulso_d_x}, Y:{pulso_d_y})"
+                    # Ver qual função para gerar uma reta de 0 a 17khz, e nesse khz mostrar as notas de acordo com o escopo de HZ, aka o Dó tem (Dó 4) tem Equivalência de 261.63HZ, a gente adiciona um calibre de precisão para isso (ou semelhante) Digamos que a posição do dó esteja correta, a tela irá ficar verde ficará a nota escrita ao lado do pulso correspondente. (7 naturais, 12 semitons)
+                    f"Racionalizado: X = ({(pulso_e_x / 2) * (pulso_e_y / 2)}"
                 )
 
     cv.imshow("Bateria Virtual - Dois Punhos", frame)
